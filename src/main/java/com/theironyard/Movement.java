@@ -14,13 +14,13 @@ public class Movement {
     int id;
 
     @Column(nullable = false)
-    String deadlift;
+    String name;
 
     @Column(nullable = false)
-    String backsquat;
+    String reps;
 
     @Column(nullable = false)
-    String shoulderpress;
+    String location;
 
     @Column(nullable = false)
     int rating;
@@ -28,10 +28,10 @@ public class Movement {
     public Movement() {
     }
 
-    public Movement(String deadlift, String backsquat, String shoulderpress, int rating) {
-        this.deadlift = deadlift;
-        this.backsquat = backsquat;
-        this.shoulderpress = shoulderpress;
+    public Movement(String name, String reps, String location, int rating) {
+        this.name = name;
+        this.reps = reps;
+        this.location = location;
         this.rating = rating;
     }
 }

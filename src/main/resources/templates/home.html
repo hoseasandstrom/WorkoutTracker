@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workout Tracker Home</title>
+</head>
+<body>
+
+<form action="/add-movement" method="post">
+    <input type="text" placeholder="Movement Name" name="movementname"/>
+    <select name="movement">
+        <option selected disabled>Movement</option>
+        <option value="deadlift">Deadlift</option>
+        <option value="backsquat">Backsquat</option>
+        <option value="shoulderpress">Shoulder Press</option>
+        <option value="pullup">Pull Up</option>
+    </select>
+    <input type="text" name="reps" placeholder="Enter rep scheme"/>
+    <select name="movementlocation">
+        <option selected disabled>Training Location</option>
+        <option value="bigbox">Big Box Gym</option>
+        <option value="cfbox">CrossFit Affiliate</option>
+        <option value="home">Garage Gym</option>
+    </select>
+    <input type="number" placeholder="Rate Your Training (1-10)" name="movementrating"/>
+    <button type="submit">Do it!</button>
+</form>
+
+<ol>
+    {{#movments}}
+    <li>{{movementname}} {{movementlocation}} {{movementrating}}</li>
+    {{/movements}}
+</ol>
+
+</body>
+</html>
