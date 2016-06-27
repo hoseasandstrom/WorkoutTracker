@@ -5,32 +5,77 @@
     <title>Workout Tracker Home</title>
 </head>
 <body>
+{{^username}}
+<h1>Workout Tracker</h1>
+<br>
+<form action="/login" method="post">
+    <input type="text" placeholder="Username" name="username" required/>
+    <input type="password" placeholder="Password" name="password" required/>
+    <button type="submit">Login</button>
+</form>
+<form action="/logout" method="post" style="display: inline block">
+    <button type="submit">Logout</button>
+</form>
+{{/username}}
 
-<form action="/add-movement" method="post">
-    <input type="text" placeholder="Movement Name" name="movementname"/>
+{{#username}}
+<a href="/">All</a>
+<a href="/?movement=deadlift">Deadlift</a>
+<a href="/?movement=backsquat">Back Squat</a>
+<a href="/?movement=shoulderpress">Shoulder Press</a>
+<a href="/?movement=pullup">Pull Up</a>
+
+<form action="/" method="get">
+    <input type="text" placeholder="Search" name="search"/>
+    <button type="submit">Search</button>
+</form>
+
+<br><br>
+
+<form action="/add-workout" method="post">
+    <input type="text" placeholder="Name your Workout" name="workoutname"/>
     <select name="movement">
-        <option selected disabled>Movement</option>
+        <option selected disabled>Main Movement</option>
         <option value="deadlift">Deadlift</option>
         <option value="backsquat">Backsquat</option>
         <option value="shoulderpress">Shoulder Press</option>
         <option value="pullup">Pull Up</option>
     </select>
     <input type="text" name="reps" placeholder="Enter rep scheme"/>
-    <select name="movementlocation">
+    <select name="location">
         <option selected disabled>Training Location</option>
         <option value="bigbox">Big Box Gym</option>
         <option value="cfbox">CrossFit Affiliate</option>
         <option value="home">Garage Gym</option>
     </select>
-    <input type="number" placeholder="Rate Your Training (1-10)" name="movementrating"/>
+    <input type="number" placeholder="Rate Your Training (1-10)" name="rating"/>
+    <input type="text" placeholder="Enter Notes:" name="workoutnote"/>
+    <input type="datetime-local" name="date" value="{{now}}"/>
     <button type="submit">Do it!</button>
 </form>
 
-<ol>
-    {{#movments}}
-    <li>{{movementname}} {{movementlocation}} {{movementrating}}</li>
-    {{/movements}}
-</ol>
-
+<table>
+    <thead>
+        <th>Name of Workout</th>
+        <th>Primary Movement</th>
+        <th>Rep Scheme(reps then sets)</th>
+        <th>Training Location</th>
+        <th>How the Workout was Rated</th>
+        <th>Training Notes</th>
+        <th>Date</th>
+    </thead>
+    {{#workouts}}
+        <tr>
+            <td>{{workoutname}}</td>
+            <td>{{movement}}</td>
+            <td>{{reps}}</td>
+            <td>{{location}}</td>
+            <td>{{rating}}</td>
+            <td>{{note}}</td>
+            <td>{{date}}</td>
+        </tr>
+    {{/workouts}}
+</table>
+{{/username}}
 </body>
 </html>
