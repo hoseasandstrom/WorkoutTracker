@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="tables.css">
     <meta charset="UTF-8">
     <title>Workout Tracker Home</title>
 </head>
@@ -9,8 +10,8 @@
 <h1>Workout Tracker</h1>
 <br>
 <form action="/login" method="post">
-    <input type="text" placeholder="Username" name="username" required/>
-    <input type="password" placeholder="Password" name="password" required/>
+    <input type="text" placeholder="Username" name="username"/>
+    <input type="password" placeholder="Password" name="password"/>
     <button type="submit">Login</button>
 </form>
 <form action="/logout" method="post" style="display: inline block">
@@ -18,12 +19,14 @@
 </form>
 {{/username}}
 
-{{#username}}
-<a href="/">All</a>
-<a href="/?movement=deadlift">Deadlift</a>
-<a href="/?movement=backsquat">Back Squat</a>
-<a href="/?movement=shoulderpress">Shoulder Press</a>
-<a href="/?movement=pullup">Pull Up</a>
+
+<table>
+    <th><a href="/">All</a></th>
+    <th><a href="/?movement=deadlift">Deadlift</a></th>
+    <th><a href="/?movement=backsquat">Back Squat</a></th>
+    <th><a href="/?movement=shoulderpress">Shoulder Press</a></th>
+    <th><a href="/?movement=pullup">Pull Up</a></th>
+</table>
 
 <form action="/" method="get">
     <input type="text" placeholder="Search" name="search"/>
@@ -34,6 +37,7 @@
 
 <form action="/add-workout" method="post">
     <input type="text" placeholder="Name your Workout" name="workoutname"/>
+
     <select name="movement">
         <option selected disabled>Main Movement</option>
         <option value="deadlift">Deadlift</option>
@@ -41,16 +45,22 @@
         <option value="shoulderpress">Shoulder Press</option>
         <option value="pullup">Pull Up</option>
     </select>
+
     <input type="text" name="reps" placeholder="Enter rep scheme"/>
+
     <select name="location">
         <option selected disabled>Training Location</option>
-        <option value="bigbox">Big Box Gym</option>
-        <option value="cfbox">CrossFit Affiliate</option>
-        <option value="home">Garage Gym</option>
+        <option value="Big-Box">Big Box Gym</option>
+        <option value="CrossFit-Affiliate">CrossFit Affiliate</option>
+        <option value="Garage-Gym">Garage Gym</option>
     </select>
+
     <input type="number" placeholder="Rate Your Training (1-10)" name="rating"/>
-    <input type="text" placeholder="Enter Notes:" name="workoutnote"/>
-    <input type="datetime-local" name="date" value="{{now}}"/>
+
+    <input type="text" placeholder="Enter Notes:" name="note"/>
+
+    <input type="datetime-local" name="date" hiddenvalue="{{now}}"/>
+
     <button type="submit">Do it!</button>
 </form>
 
@@ -75,7 +85,47 @@
             <td>{{date}}</td>
         </tr>
     {{/workouts}}
+    <form action="/edit" method="post" style="display inline:block">
+        <input type="hidden" value="true"/>
+        <button type="submit">Edit</button>
+    </form>
+    <form action="/delete-workout" method="post" style="display inline:block">
+        <input type="hidden" name="id" value="{{id}}"/>
+        <button type="submit">Delete</button>
+    </form>
 </table>
-{{/username}}
+{{edit}}
+{{workouts}}
+<form action="/edit-workout" method="post"/>
+<input type="text" placeholder="Name your Workout" name="workoutname"/>
+
+<select name="movement">
+    <option selected disabled>Main Movement</option>
+    <option value="deadlift">Deadlift</option>
+    <option value="backsquat">Backsquat</option>
+    <option value="shoulderpress">Shoulder Press</option>
+    <option value="pullup">Pull Up</option>
+</select>
+
+<input type="text" name="reps" placeholder="Enter rep scheme"/>
+
+<select name="location">
+    <option selected disabled>Training Location</option>
+    <option value="Big-Box">Big Box Gym</option>
+    <option value="CrossFit-Affiliate">CrossFit Affiliate</option>
+    <option value="Garage-Gym">Garage Gym</option>
+</select>
+
+<input type="number" placeholder="Rate Your Training (1-10)" name="rating"/>
+
+<input type="text" placeholder="Enter Notes:" name="note"/>
+
+<input type="datetime-local" name="date" hiddenvalue="{{now}}"/>
+
+<button type="submit">Update</button>
+</form>
+{{workouts}}
+{{edit}}
+
 </body>
 </html>

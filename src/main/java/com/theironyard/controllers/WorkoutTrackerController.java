@@ -58,9 +58,9 @@ public class WorkoutTrackerController {
         if(user == null) {
             user = new User(username, PasswordStorage.createHash(password));
         }
-        //else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
-        //    throw new Exception("Wrong password");
-        //}
+        else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
+            throw new Exception("Wrong password");
+        }
         session.setAttribute("username", username);
         return "redirect:/";
 
@@ -92,10 +92,10 @@ public class WorkoutTrackerController {
     @RequestMapping(path = "edit", method = RequestMethod.POST)
     public String modifyWorkout() {
         edit = true;
-        return"redirect:/";
+        return"redirect:/edit-workout";
     }
 
-    @RequestMapping(path="//edit-workout", method = RequestMethod.POST)
+    @RequestMapping(path="/edit-workout", method = RequestMethod.POST)
     public String editWorkout(int id, String workoutname, String movement, String reps, String location, int rating, String note, String date, String username) {
         Workout workout = new Workout(id, workoutname, movement, reps, location, rating, note, LocalDateTime.parse(date));
         workouts.save(workout);
