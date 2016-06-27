@@ -6,9 +6,10 @@
     <title>Workout Tracker Home</title>
 </head>
 <body>
-{{^username}}
-<h1>Workout Tracker</h1>
+
+<h1><center>Workout Tracker</center></h1>
 <br>
+{{^user}}
 <form action="/login" method="post">
     <input type="text" placeholder="Username" name="username"/>
     <input type="password" placeholder="Password" name="password"/>
@@ -17,8 +18,11 @@
 <form action="/logout" method="post" style="display: inline block">
     <button type="submit">Logout</button>
 </form>
-{{/username}}
+{{/user}}
 
+{{#user}}
+You are logged in in as:<strong>{{name}}</strong>
+{{/user}}
 
 <table>
     <th><a href="/">All</a></th>
@@ -85,47 +89,9 @@
             <td>{{date}}</td>
         </tr>
     {{/workouts}}
-    <form action="/edit" method="post" style="display inline:block">
-        <input type="hidden" value="true"/>
-        <button type="submit">Edit</button>
-    </form>
-    <form action="/delete-workout" method="post" style="display inline:block">
-        <input type="hidden" name="id" value="{{id}}"/>
-        <button type="submit">Delete</button>
-    </form>
+
 </table>
-{{edit}}
-{{workouts}}
-<form action="/edit-workout" method="post"/>
-<input type="text" placeholder="Name your Workout" name="workoutname"/>
 
-<select name="movement">
-    <option selected disabled>Main Movement</option>
-    <option value="deadlift">Deadlift</option>
-    <option value="backsquat">Backsquat</option>
-    <option value="shoulderpress">Shoulder Press</option>
-    <option value="pullup">Pull Up</option>
-</select>
-
-<input type="text" name="reps" placeholder="Enter rep scheme"/>
-
-<select name="location">
-    <option selected disabled>Training Location</option>
-    <option value="Big-Box">Big Box Gym</option>
-    <option value="CrossFit-Affiliate">CrossFit Affiliate</option>
-    <option value="Garage-Gym">Garage Gym</option>
-</select>
-
-<input type="number" placeholder="Rate Your Training (1-10)" name="rating"/>
-
-<input type="text" placeholder="Enter Notes:" name="note"/>
-
-<input type="datetime-local" name="date" hiddenvalue="{{now}}"/>
-
-<button type="submit">Update</button>
-</form>
-{{workouts}}
-{{edit}}
 
 </body>
 </html>

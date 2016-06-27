@@ -38,10 +38,8 @@ public class Workout {
     LocalDateTime date;
 
     @ManyToOne
-    User author;
+    User user;
 
-    @ManyToMany(mappedBy="workoutList", cascade = CascadeType.ALL)
-    List<User> userList;
 
     public Workout() {
     }
@@ -56,7 +54,7 @@ public class Workout {
         this.date = date;
     }
 
-    public Workout(String workoutname, String movement, String reps, String location, int rating, String note, LocalDateTime date, User author) {
+    public Workout(String workoutname, String movement, String reps, String location, int rating, String note, LocalDateTime date, User user) {
         this.workoutname = workoutname;
         this.movement = movement;
         this.reps = reps;
@@ -64,7 +62,7 @@ public class Workout {
         this.rating = rating;
         this.note = note;
         this.date = date;
-        this.author = author;
+        this.user = user;
     }
 
     public Workout(int id, String workoutname, String movement, String reps, String location, int rating, String note, LocalDateTime date) {
@@ -76,17 +74,6 @@ public class Workout {
         this.rating = rating;
         this.note = note;
         this.date = date;
-    }
-
-    public Workout(String workoutname, String movement, String reps, String location, int rating, String note, LocalDateTime date, List<User> userList) {
-        this.workoutname = workoutname;
-        this.movement = movement;
-        this.reps = reps;
-        this.location = location;
-        this.rating = rating;
-        this.note = note;
-        this.date = date;
-        this.userList = userList;
     }
 
     public int getId() {
@@ -153,11 +140,11 @@ public class Workout {
         this.date = date;
     }
 
-    public User getAuthor() {
-        return author;
+    public User getUser() {
+        return user;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

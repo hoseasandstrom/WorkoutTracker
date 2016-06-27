@@ -30,24 +30,27 @@ public class WorkoutTrackerController {
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(HttpSession session, Model model, String movement, String workoutname) {
-        String userName = (String) session.getAttribute("userName");
-        User user = users.findByName(userName);
-        if (user != null) {
-            model.addAttribute("user", user);
+    public String home(HttpSession session, Model model, String note, String search) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "/login";
         }
-        model.addAttribute("now", LocalDateTime.now());
-
+        User user = users.findByName(username);
         Iterable<Workout> workoutList;
+        if (search != null) {
+            workoutList = workouts.searchNote(search);
+        } else {
         workoutList = workouts.findAll();
+        }
         for (Workout workout : workoutList) {
-            if (workout.getAuthor() == user) {
+            if (workout.getUser() == users) {
                 edit = true;
             } else {
                 edit = false;
             }
             model.addAttribute("edit", edit);
             model.addAttribute("workouts", workoutList);
+            model.addAttribute("now", LocalDateTime.now());
         }
             return "home";
     }
@@ -73,7 +76,6 @@ public class WorkoutTrackerController {
 
     }
 
-
     @RequestMapping(path = "/add-workout", method = RequestMethod.POST)
     public String addWorkout(HttpSession session, String workoutname, String movement, String reps, String location, int rating, String note, String date ) {
         String username = (String) session.getAttribute("username");
@@ -89,17 +91,10 @@ public class WorkoutTrackerController {
         return "redirect:/";
     }
 
-    @RequestMapping(path = "edit", method = RequestMethod.POST)
-    public String modifyWorkout() {
-        edit = true;
-        return"redirect:/edit-workout";
-    }
-
     @RequestMapping(path="/edit-workout", method = RequestMethod.POST)
     public String editWorkout(int id, String workoutname, String movement, String reps, String location, int rating, String note, String date, String username) {
         Workout workout = new Workout(id, workoutname, movement, reps, location, rating, note, LocalDateTime.parse(date));
         workouts.save(workout);
-        edit = false;
         return "redirect:/";
     }
 

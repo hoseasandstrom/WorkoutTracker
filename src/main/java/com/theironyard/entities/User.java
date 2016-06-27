@@ -19,10 +19,6 @@ public class User {
     @Column(nullable = false)
     String password;
 
-    @ManyToMany
-    @JoinTable(name = "user_workouts",joinColumns={@JoinColumn(name="users_id")}, inverseJoinColumns={@JoinColumn(name="workouts_id")})
-    List<Workout> workoutList;
-
     public User() {
     }
 
@@ -55,11 +51,4 @@ public class User {
         this.password = password;
     }
 
-    public List<Workout> getWorkoutList() {
-        return workoutList;
-    }
-
-    public void setWorkoutList(List<Workout> workoutList) {
-        this.workoutList = workoutList;
-    }
 }

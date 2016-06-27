@@ -14,6 +14,6 @@ public interface WorkoutTrackerRepository extends CrudRepository<Workout, Intege
 
 
     @Query("SELECT w FROM Workout w WHERE w.note LIKE ?1%")
-    List<Workout> findByNoteContaining(String note);
+    public Iterable<Workout> searchNote(String note);
 
 }
