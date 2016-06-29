@@ -9,7 +9,7 @@
 
 <h1><center>Workout Tracker</center></h1>
 <br>
-{{^user}}
+{{^username}}
 <form action="/login" method="post">
     <input type="text" placeholder="Username" name="username"/>
     <input type="password" placeholder="Password" name="password"/>
@@ -18,11 +18,11 @@
 <form action="/logout" method="post" style="display: inline block">
     <button type="submit">Logout</button>
 </form>
-{{/user}}
+{{/username}}
 
-{{#user}}
+{{#username}}
 You are logged in in as:<strong>{{name}}</strong>
-{{/user}}
+{{/username}}
 
 <table>
     <th><a href="/">All</a></th>
@@ -32,9 +32,6 @@ You are logged in in as:<strong>{{name}}</strong>
     <th><a href="/?movement=pullup">Pull Up</a></th>
 </table>
 
-<form action="/" method="get">
-    <input type="text" placeholder="Search" name="search"/>
-    <button type="submit">Search</button>
 </form>
 
 <br><br>

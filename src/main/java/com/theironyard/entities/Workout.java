@@ -44,6 +44,15 @@ public class Workout {
     public Workout() {
     }
 
+    public Workout(String workoutname, String movement, String reps, String location, int rating, String note) {
+        this.workoutname = workoutname;
+        this.movement = movement;
+        this.reps = reps;
+        this.location = location;
+        this.rating = rating;
+        this.note = note;
+    }
+
     public Workout(String workoutname, String movement, String reps, String location, int rating, String note, LocalDateTime date) {
         this.workoutname = workoutname;
         this.movement = movement;

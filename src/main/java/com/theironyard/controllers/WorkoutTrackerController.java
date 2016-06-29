@@ -12,17 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
+
+
 
 /**
  * Created by hoseasandstrom on 6/26/16.
  */
 @Controller
 public class WorkoutTrackerController {
-    boolean edit;
     @Autowired
     WorkoutTrackerRepository workouts;
     @Autowired
@@ -30,28 +28,36 @@ public class WorkoutTrackerController {
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(HttpSession session, Model model, String note, String search) {
+    public String home(HttpSession session, Model model, String workoutname, String movement, String location, Integer rating, String search) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
-            return "/login";
+            return "redirect:/";
         }
         User user = users.findByName(username);
         Iterable<Workout> workoutList;
         if (search != null) {
             workoutList = workouts.searchNote(search);
-        } else {
-        workoutList = workouts.findAll();
         }
-        for (Workout workout : workoutList) {
-            if (workout.getUser() == users) {
-                edit = true;
-            } else {
-                edit = false;
-            }
-            model.addAttribute("edit", edit);
-            model.addAttribute("workouts", workoutList);
-            model.addAttribute("now", LocalDateTime.now());
+        if (workoutname != null) {
+            workoutList = workouts.findByWorkoutname(workoutname);
         }
+        else if (movement != null) {
+            workoutList = workouts.findByMovement(movement);
+        }
+        else if (location != null) {
+            workoutList = workouts.findByLocation(location);
+        }
+        else if (rating != null) {
+            workoutList = workouts.findByRatingGreaterThanEqual(rating);
+        }
+        else {
+            workoutList = workouts.findAll();
+        }
+
+        model.addAttribute("workouts", workoutList);
+
+        model.addAttribute("now", LocalDateTime.now());
+
             return "home";
     }
 

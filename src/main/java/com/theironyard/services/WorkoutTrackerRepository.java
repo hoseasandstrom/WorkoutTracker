@@ -10,7 +10,11 @@ import java.util.List;
  * Created by hoseasandstrom on 6/26/16.
  */
 public interface WorkoutTrackerRepository extends CrudRepository<Workout, Integer> {
-    List<Workout> findByMovement(String movement);
+    public Iterable<Workout> findByWorkoutname(String workoutname);
+    public Iterable<Workout> findByMovement(String movement);
+    public Iterable<Workout> findByLocation(String location);
+    public Iterable<Workout> findByRatingGreaterThanEqual(int rating);
+
 
 
     @Query("SELECT w FROM Workout w WHERE w.note LIKE ?1%")
